@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Dearest Annet</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            position: relative;
+            width: 100%;
+            max-width: 500px;
+            height: 500px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .envelope {
+            position: relative;
+            width: 300px;
+            height: 200px;
+            cursor: pointer;
+            transition: transform 0.5s ease;
+            z-index: 10;
+        }
+
+        .envelope:hover {
+            transform: scale(1.05);
+        }
+
+        .envelope-front {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #e84393;
+            border-radius: 5px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+
+        .envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            margin: 0 auto;
+            width: 0;
+            height: 0;
+            border-left: 150px solid transparent;
+            border-right: 150px solid transparent;
+            border-top: 100px solid #fd79a8;
+            z-index: 3;
+        }
+
+        .heart {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: white;
+            z-index: 4;
+            animation: heartbeat 1.5s ease infinite;
+        }
+
+        .heart:before,
+        .heart:after {
+            content: '';
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -20px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: 20px;
+        }
+
+        @keyframes heartbeat {
+            0% { transform: translate(-50%, -50%) scale(1); }
+            50% { transform: translate(-50%, -50%) scale(1.1); }
+            100% { transform: translate(-50%, -50%) scale(1); }
+        }
+
+        .card {
+            position: absolute;
+            width: 280px;
+            height: 380px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(50px) scale(0.9);
+            transition: all 0.8s ease;
+            z-index: 1;
+        }
+
+        .card.open {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            z-index: 5;
+        }
+
+        .card h1 {
+            color: #e84393;
+            margin-bottom: 20px;
+            font-size: 28px;
+            font-weight: normal;
+        }
+
+        .card p {
+            color: #333;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .signature {
+            margin-top: 20px;
+            font-style: italic;
+            color: #e84393;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .floating-heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e84393;
+            transform: rotate(45deg);
+            opacity: 0;
+        }
+
+        .floating-heart:before,
+        .floating-heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background: #e84393;
+            border-radius: 50%;
+        }
+
+        .floating-heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .floating-heart:after {
+            top: 0;
+            left: 10px;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(45deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        .instruction {
+            position: absolute;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            text-align: center;
+            color: #fff;
+            font-size: 14px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="envelope" id="envelope">
+            <div class="envelope-front"></div>
+            <div class="heart"></div>
+        </div>
+        
+        <div class="card" id="card">
+            <h1>For My Dearest Annet</h1>
+            <p>My beautiful Annet, every day with you feels like a beautiful dream that I never want to wake up from.</p>
+            <p>Your smile brightens my darkest days, and your love fills my heart with endless joy.</p>
+            <p>You are the most amazing person I've ever known, and I'm so grateful to have you in my life.</p>
+            <p>No matter what happens, always remember how deeply loved and cherished you are.</p>
+            <p class="signature">Forever yours,<br>With all my love</p>
+        </div>
+        
+        <div class="hearts-container" id="heartsContainer"></div>
+        <div class="instruction">Click the envelope to open</div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const envelope = document.getElementById('envelope');
+            const card = document.getElementById('card');
+            const heartsContainer = document.getElementById('heartsContainer');
+            
+            envelope.addEventListener('click', function() {
+                // Open the card
+                card.classList.add('open');
+                
+                // Create floating hearts
+                createHearts();
+                
+                // Hide envelope after animation
+                setTimeout(() => {
+                    envelope.style.display = 'none';
+                }, 500);
+            });
+            
+            function createHearts() {
+                for (let i = 0; i < 15; i++) {
+                    setTimeout(() => {
+                        const heart = document.createElement('div');
+                        heart.classList.add('floating-heart');
+                        
+                        // Random position
+                        const left = Math.random() * 100;
+                        heart.style.left = ${left}%;
+                        
+                        // Random size
+                        const size = 10 + Math.random() * 20;
+                        heart.style.width = ${size}px;
+                        heart.style.height = ${size}px;
+                        
+                        // Random color variation
+                        const colorVariation = Math.floor(Math.random() * 30);
+                        heart.style.background = rgb(${232 - colorVariation}, ${67 - colorVariation}, ${147 - colorVariation});
+                        
+                        // Animation
+                        const duration = 2 + Math.random() * 3;
+                        heart.style.animation = float ${duration}s ease-out forwards;
+                        
+                        heartsContainer.appendChild(heart);
+                        
+                        // Remove heart after animation
+                        setTimeout(() => {
+                            if (heart.parentNode) {
+                                heart.remove();
+                            }
+                        }, duration * 1000);
+                    }, i * 200);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
