@@ -12,34 +12,40 @@
         }
 
         body {
-            font-family: 'Georgia', serif;
-            background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #ffafbd, #ffc3a0);
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
-            overflow: hidden;
         }
 
         .container {
             position: relative;
             width: 100%;
             max-width: 500px;
-            height: 500px;
+            height: 600px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
-        .envelope {
+        .envelope-wrapper {
             position: relative;
             width: 300px;
             height: 200px;
             cursor: pointer;
-            transition: transform 0.5s ease;
             z-index: 10;
+            margin-bottom: 20px;
+        }
+
+        .envelope {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.5s ease;
         }
 
         .envelope:hover {
@@ -50,7 +56,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: #e84393;
+            background: #e74c3c;
             border-radius: 5px;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
             z-index: 2;
@@ -67,7 +73,7 @@
             height: 0;
             border-left: 150px solid transparent;
             border-right: 150px solid transparent;
-            border-top: 100px solid #fd79a8;
+            border-top: 100px solid #c0392b;
             z-index: 3;
         }
 
@@ -111,12 +117,14 @@
 
         .card {
             position: absolute;
-            width: 280px;
-            height: 380px;
+            width: 90%;
+            max-width: 350px;
+            height: auto;
+            min-height: 450px;
             background: white;
-            border-radius: 10px;
+            border-radius: 15px;
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
-            padding: 30px;
+            padding: 30px 25px;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -126,19 +134,22 @@
             transform: translateY(50px) scale(0.9);
             transition: all 0.8s ease;
             z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.9);
         }
 
         .card.open {
             opacity: 1;
-            transform: translateY(0) scale(1);
+            transform: translate(-50%, -50%) scale(1);
             z-index: 5;
         }
 
         .card h1 {
-            color: #e84393;
+            color: #e74c3c;
             margin-bottom: 20px;
             font-size: 28px;
-            font-weight: normal;
+            font-weight: bold;
         }
 
         .card p {
@@ -151,7 +162,7 @@
         .signature {
             margin-top: 20px;
             font-style: italic;
-            color: #e84393;
+            color: #e74c3c;
             font-weight: bold;
             font-size: 18px;
         }
@@ -170,7 +181,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #e84393;
+            background: #e74c3c;
             transform: rotate(45deg);
             opacity: 0;
         }
@@ -181,7 +192,7 @@
             position: absolute;
             width: 20px;
             height: 20px;
-            background: #e84393;
+            background: #e74c3c;
             border-radius: 50%;
         }
 
@@ -213,16 +224,56 @@
             width: 100%;
             text-align: center;
             color: #fff;
-            font-size: 14px;
+            font-size: 16px;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+            font-weight: bold;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 480px) {
+            .container {
+                height: 500px;
+            }
+            
+            .envelope-wrapper {
+                width: 250px;
+                height: 167px;
+            }
+            
+            .envelope:before {
+                border-left: 125px solid transparent;
+                border-right: 125px solid transparent;
+                border-top: 83px solid #c0392b;
+            }
+            
+            .card {
+                width: 95%;
+                max-width: 300px;
+                min-height: 400px;
+                padding: 20px 15px;
+            }
+            
+            .card h1 {
+                font-size: 24px;
+            }
+            
+            .card p {
+                font-size: 14px;
+            }
+            
+            .instruction {
+                font-size: 14px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="envelope" id="envelope">
-            <div class="envelope-front"></div>
-            <div class="heart"></div>
+        <div class="envelope-wrapper" id="envelopeWrapper">
+            <div class="envelope" id="envelope">
+                <div class="envelope-front"></div>
+                <div class="heart"></div>
+            </div>
         </div>
         
         <div class="card" id="card">
@@ -240,11 +291,12 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const envelopeWrapper = document.getElementById('envelopeWrapper');
             const envelope = document.getElementById('envelope');
             const card = document.getElementById('card');
             const heartsContainer = document.getElementById('heartsContainer');
             
-            envelope.addEventListener('click', function() {
+            envelopeWrapper.addEventListener('click', function() {
                 // Open the card
                 card.classList.add('open');
                 
@@ -253,7 +305,7 @@
                 
                 // Hide envelope after animation
                 setTimeout(() => {
-                    envelope.style.display = 'none';
+                    envelopeWrapper.style.display = 'none';
                 }, 500);
             });
             
@@ -274,7 +326,7 @@
                         
                         // Random color variation
                         const colorVariation = Math.floor(Math.random() * 30);
-                        heart.style.background = rgb(${232 - colorVariation}, ${67 - colorVariation}, ${147 - colorVariation});
+                        heart.style.background = rgb(${231 - colorVariation}, ${76 - colorVariation}, ${108 - colorVariation});
                         
                         // Animation
                         const duration = 2 + Math.random() * 3;
